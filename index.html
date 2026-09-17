@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Notes from the kitchen by Jongin Byeon." />
+    <title>Jongin Byeon — Newsletter</title>
+    <meta name="theme-color" content="#e9e7e2" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Jongin Byeon — Newsletter" />
+    <meta property="og:description" content="Notes from the kitchen by Jongin Byeon." />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Jongin Byeon — Newsletter" />
+    <meta name="twitter:description" content="Notes from the kitchen by Jongin Byeon." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23e9e7e2'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='46' text-anchor='middle' fill='%23181817'%3EJB%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,400;0,500;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      :root { --ink:#181817; --paper:#e9e7e2; --line:rgba(24,24,23,.28); }
+      * { box-sizing:border-box; }
+      body { min-height:100svh; margin:0; color:var(--ink); background:var(--paper); font-family:"Space Grotesk",sans-serif; }
+      a { color:inherit; }
+      a:focus-visible { outline:1px solid var(--ink); outline-offset:4px; }
+      main { min-height:100svh; padding:24px 28px; display:flex; flex-direction:column; justify-content:space-between; }
+      header, footer { display:flex; justify-content:space-between; align-items:center; font:500 10px "DM Mono",monospace; letter-spacing:.1em; text-transform:uppercase; }
+      header a { text-decoration:none; }
+      .brand { font-family:"Playfair Display",serif; font-size:18px; font-weight:400; letter-spacing:-.04em; text-transform:none; }
+      .nav { display:flex; gap:18px; }
+      .content { width:min(100%, 820px); margin:0 auto; padding:72px 0; }
+      .label { margin:0 0 26px; font:500 10px "DM Mono",monospace; letter-spacing:.12em; text-transform:uppercase; }
+      h1 { max-width:790px; margin:0; font:400 clamp(3.6rem,9vw,8.5rem)/.87 "Fraunces",serif; letter-spacing:-.03em; }
+      h1 em { color:#66645f; font-weight:400; font-style:italic; }
+      .byline { margin:18px 0 0; font:500 11px "DM Mono",monospace; letter-spacing:.08em; color:#5e5c56; text-transform:lowercase; }
+      .intro { max-width:420px; margin:30px 0 0; font-size:15px; line-height:1.5; }
+      form { display:flex; max-width:610px; margin-top:50px; border-bottom:1px solid var(--ink); }
+      input { min-width:0; flex:1; border:0; outline:0; padding:16px 0; color:var(--ink); background:transparent; font:400 16px "Space Grotesk",sans-serif; }
+      input::placeholder { color:#77756f; }
+      input:focus-visible { outline:1px solid var(--ink); outline-offset:6px; }
+      button { border:0; padding:0 0 0 20px; color:var(--ink); background:transparent; font:500 10px "DM Mono",monospace; letter-spacing:.1em; text-transform:uppercase; cursor:pointer; }
+      button:focus-visible { outline:1px solid var(--ink); outline-offset:4px; }
+      button:disabled { cursor:default; opacity:.55; }
+      .note { margin:12px 0 0; color:#5e5c56; font-size:11px; line-height:1.45; }
+      footer a { text-underline-offset:3px; }
+      @media (max-width:600px) { main { padding:18px 16px; } .content { padding:58px 0; } h1 { font-size:clamp(3.4rem,17vw,5.2rem); } form { margin-top:38px; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header><a class="brand" href="index.html">Jongin Byeon</a><nav class="nav" aria-label="Primary"><a href="experience.html">Culinary Experience</a><a href="https://www.instagram.com/byeon.jong.in/" target="_blank" rel="noopener noreferrer">Instagram</a></nav></header>
+      <section class="content">
+        <p class="label">Notes from the kitchen</p>
+        <h1>Things By <em>Eon.</em></h1>
+        <p class="byline">jongin byeon</p>
+        <p class="intro">팝업, 프로젝트, 그리고 주방에서 진행 중인 작업에 관한 소식을 전합니다.</p>
+        <form id="newsletter-form">
+          <input id="subscriber-email" type="email" autocomplete="email" placeholder="Your email address" aria-label="Your email address" required />
+          <button type="submit">Subscribe ↗</button>
+        </form>
+        <p class="note" id="newsletter-note" aria-live="polite">구독 요청은 이메일로 전달됩니다.</p>
+      </section>
+      <footer><span>© 2026 Jongin Byeon</span><a href="mailto:jb@byeonjongin.com">jb@byeonjongin.com</a></footer>
+    </main>
+    <script>
+      const form = document.getElementById('newsletter-form');
+      const note = document.getElementById('newsletter-note');
+      const emailInput = document.getElementById('subscriber-email');
+      const button = form.querySelector('button');
+      const defaultNote = note.textContent;
+
+      form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        const email = emailInput.value.trim();
+        if (!email) return;
+
+        button.disabled = true;
+        note.textContent = '전송 중…';
+
+        try {
+          const res = await fetch('https://formsubmit.co/ajax/jb@byeonjongin.com', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({
+              email: email,
+              _subject: 'New newsletter subscriber — ' + email,
+              _template: 'table',
+              _captcha: 'false'
+            })
+          });
+
+          if (!res.ok) throw new Error('request failed');
+
+          note.textContent = '구독해주셔서 감사합니다. 새 소식이 있을 때 이메일로 전해드릴게요.';
+          emailInput.value = '';
+        } catch (err) {
+          note.textContent = '전송에 실패했어요. jb@byeonjongin.com 으로 직접 이메일 보내주시면 감사하겠습니다.';
+        } finally {
+          window.setTimeout(function () {
+            button.disabled = false;
+          }, 1500);
+        }
+      });
+    </script>
+  </body>
+</html>
