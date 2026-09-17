@@ -67,6 +67,7 @@
       const emailInput = document.getElementById('subscriber-email');
       const button = form.querySelector('button');
       const defaultNote = note.textContent;
+      const SHEET_SYNC_URL = 'https://script.google.com/macros/s/AKfycbyerrpBQDPkChEKY-43c_RsdfB6Woa-mWd5SMN69ZCpRf-UvUciHy3QQxg04uTAm-mq/exec';
 
       form.addEventListener('submit', async function (event) {
         event.preventDefault();
@@ -77,18 +78,28 @@
         note.textContent = '전송 중…';
 
         try {
-          const res = await fetch('https://formsubmit.co/ajax/jb@byeonjongin.com', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-            body: JSON.stringify({
-              email: email,
-              _subject: 'New newsletter subscriber — ' + email,
-              _template: 'table',
-              _captcha: 'false'
+          const results = await Promise.allSettled([
+            fetch('https://formsubmit.co/ajax/jb@byeonjongin.com', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+              body: JSON.stringify({
+                email: email,
+                _subject: 'New newsletter subscriber — ' + email,
+                _template: 'table',
+                _captcha: 'false'
+              })
+            }),
+            fetch(SHEET_SYNC_URL, {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+              body: JSON.stringify({ email: email })
             })
-          });
+          ]);
 
-          if (!res.ok) throw new Error('request failed');
+          const formsubmitResult = results[0];
+          const formsubmitOk = formsubmitResult.status === 'fulfilled' && formsubmitResult.value.ok;
+          if (!formsubmitOk) throw new Error('request failed');
 
           note.textContent = '구독해주셔서 감사합니다. 새 소식이 있을 때 이메일로 전해드릴게요.';
           emailInput.value = '';
