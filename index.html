@@ -49,7 +49,9 @@
       h1 em { color:#66645f; font-weight:400; font-style:italic; }
       .byline { margin:18px 0 0; font:500 11px "DM Mono",monospace; letter-spacing:.08em; color:#5e5c56; }
       .intro { max-width:420px; margin:30px 0 0; font-size:15px; line-height:1.5; }
-      form { display:flex; max-width:610px; margin-top:50px; border-bottom:1px solid var(--ink); }
+      form { display:flex; flex-direction:column; max-width:610px; margin-top:50px; }
+      .field-row { display:flex; border-bottom:1px solid var(--ink); }
+      .field-row + .field-row { margin-top:14px; }
       input { min-width:0; flex:1; border:0; outline:0; padding:16px 0; color:var(--ink); background:transparent; font:400 16px "Space Grotesk",sans-serif; }
       input::placeholder { color:#77756f; }
       input:focus-visible { outline:1px solid var(--ink); outline-offset:6px; }
@@ -70,8 +72,9 @@
         <p class="byline">Jongin Byeon</p>
         <p class="intro">팝업, 프로젝트, 그리고 주방에서 진행 중인 작업에 관한 소식을 전합니다.</p>
         <form id="newsletter-form">
-          <input id="subscriber-email" type="email" autocomplete="email" placeholder="Your email address" aria-label="Your email address" required />
-          <button type="submit">Subscribe ↗</button>
+          <div class="field-row"><input id="subscriber-name" type="text" autocomplete="name" placeholder="Your name" aria-label="Your name" required /></div>
+          <div class="field-row"><input id="subscriber-email" type="email" autocomplete="email" placeholder="Your email address" aria-label="Your email address" required /></div>
+          <div class="field-row"><input id="subscriber-handle" type="text" placeholder="Instagram or occupation (optional)" aria-label="Instagram or occupation (optional)" /><button type="submit">Subscribe ↗</button></div>
         </form>
         <p class="note" id="newsletter-note" aria-live="polite">구독 요청은 이메일로 전달됩니다.</p>
       </section>
@@ -80,15 +83,19 @@
     <script>
       const form = document.getElementById('newsletter-form');
       const note = document.getElementById('newsletter-note');
+      const nameInput = document.getElementById('subscriber-name');
       const emailInput = document.getElementById('subscriber-email');
+      const handleInput = document.getElementById('subscriber-handle');
       const button = form.querySelector('button');
       const defaultNote = note.textContent;
       const SHEET_SYNC_URL = 'https://script.google.com/macros/s/AKfycbyerrpBQDPkChEKY-43c_RsdfB6Woa-mWd5SMN69ZCpRf-UvUciHy3QQxg04uTAm-mq/exec';
 
       form.addEventListener('submit', async function (event) {
         event.preventDefault();
+        const name = nameInput.value.trim();
         const email = emailInput.value.trim();
-        if (!email) return;
+        const handle = handleInput.value.trim();
+        if (!name || !email) return;
 
         button.disabled = true;
         note.textContent = '전송 중…';
@@ -99,7 +106,9 @@
               method: 'POST',
               headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
               body: JSON.stringify({
+                name: name,
                 email: email,
+                instagram_or_occupation: handle,
                 _subject: 'New newsletter subscriber — ' + email,
                 _template: 'table',
                 _captcha: 'false'
@@ -109,7 +118,7 @@
               method: 'POST',
               mode: 'no-cors',
               headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-              body: JSON.stringify({ email: email })
+              body: JSON.stringify({ name: name, email: email, instagram_or_occupation: handle })
             })
           ]);
 
@@ -118,7 +127,9 @@
           if (!formsubmitOk) throw new Error('request failed');
 
           note.textContent = '구독해주셔서 감사합니다. 새 소식이 있을 때 이메일로 전해드릴게요.';
+          nameInput.value = '';
           emailInput.value = '';
+          handleInput.value = '';
         } catch (err) {
           note.textContent = '전송에 실패했어요. jb@byeonjongin.com 으로 직접 이메일 보내주시면 감사하겠습니다.';
         } finally {
