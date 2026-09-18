@@ -47,9 +47,9 @@
       .lightbox-credit { display:none; margin-top:6px; text-align:center; }
       .lightbox-credit a { color:var(--paper); font:500 10px "DM Mono",monospace; letter-spacing:.08em; text-transform:uppercase; text-decoration:underline; text-underline-offset:3px; }
       .lightbox-credit.show { display:block; }
-      .lightbox-close { position:fixed; top:24px; right:28px; border:0; background:none; color:var(--paper); font:500 10px "DM Mono",monospace; letter-spacing:.1em; text-transform:uppercase; cursor:pointer; padding:8px; }
+      .lightbox-close { position:fixed; top:24px; right:28px; z-index:5; border:0; background:rgba(24,24,23,.4); color:var(--paper); font:500 10px "DM Mono",monospace; letter-spacing:.1em; text-transform:uppercase; cursor:pointer; padding:8px 10px; border-radius:3px; }
       .lightbox-close:focus-visible { outline:1px solid var(--paper); outline-offset:4px; }
-      .lightbox-nav { position:fixed; top:50%; transform:translateY(-50%); border:0; background:none; color:var(--paper); font:400 28px "Fraunces",serif; cursor:pointer; padding:14px 18px; line-height:1; }
+      .lightbox-nav { position:fixed; top:50%; transform:translateY(-50%); z-index:5; border:0; background:rgba(24,24,23,.4); color:var(--paper); font:400 28px "Fraunces",serif; cursor:pointer; padding:14px 18px; line-height:1; border-radius:50%; }
       .lightbox-nav:focus-visible { outline:1px solid var(--paper); outline-offset:4px; }
       .lightbox-prev { left:8px; }
       .lightbox-next { right:8px; }
