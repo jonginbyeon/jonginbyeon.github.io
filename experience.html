@@ -38,8 +38,12 @@
       .michelin-link { font:500 10px "DM Mono",monospace; letter-spacing:.08em; text-transform:uppercase; text-decoration:underline; text-underline-offset:4px; color:#5e5c56; }
       article p { margin:0; font-size:13px; line-height:1.45; }
       article p a { text-decoration:underline; text-underline-offset:3px; }
+      .gallery { grid-column:1 / -1; display:flex; gap:10px; margin-top:16px; padding-bottom:6px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; }
+      .gallery figure { flex:0 0 auto; width:240px; margin:0; scroll-snap-align:start; }
+      .gallery img { display:block; width:240px; height:160px; object-fit:cover; border-radius:2px; }
+      .gallery figcaption { margin-top:6px; font:400 11px "DM Mono",monospace; letter-spacing:.02em; line-height:1.35; color:#5e5c56; }
       footer { display:flex; justify-content:space-between; padding:24px 28px; font:500 10px "DM Mono",monospace; letter-spacing:.1em; text-transform:uppercase; }
-      @media (max-width:620px) { header,main,footer { padding-left:16px; padding-right:16px; } main { padding-top:55px; } h1 { margin-bottom:65px; } article { grid-template-columns:38px 1fr; gap:10px; } article p { grid-column:2; margin-top:4px; } }
+      @media (max-width:620px) { header,main,footer { padding-left:16px; padding-right:16px; } main { padding-top:55px; } h1 { margin-bottom:65px; } article { grid-template-columns:38px 1fr; gap:10px; } article p { grid-column:2; margin-top:4px; } .gallery figure { width:200px; } .gallery img { width:200px; height:135px; } }
     </style>
   </head>
   <body>
@@ -51,8 +55,8 @@
         <article><span>01</span><div class="title-row"><h2>Restaurant Evett</h2><a class="michelin-link" href="https://guide.michelin.com/us/en/seoul-capital-area/kr-seoul/restaurant/evett" target="_blank" rel="noopener">Michelin Guide · 2 Stars</a><a class="michelin-link" href="https://www.theworlds50best.com/discovery/Establishments/South-Korea/Seoul/Evett.html" target="_blank" rel="noopener">World's 50 Best</a></div><p>Seoul, Korea<br />2019 – 2020<br />Intern → Commis → Chef de Partie → Jr. Sous Chef<br /><a href="photos/evett.jpg" target="_blank" rel="noopener">Photo ↗</a></p></article>
         <article><span>02</span><div class="title-row"><h2>Restaurant Zén</h2><a class="michelin-link" href="https://guide.michelin.com/us/en/singapore-region/singapore/restaurant/zen" target="_blank" rel="noopener">Michelin Guide · 3 Stars</a><a class="michelin-link" href="https://www.theworlds50best.com/discovery/Establishments/Singapore/Singapore/Z%C3%A9n.html" target="_blank" rel="noopener">No. 69, World's 50 Best</a></div><p>Singapore<br />2021 – 2023<br />Demi Chef de Partie → Chef de Partie<br /><a href="photos/zen.jpg" target="_blank" rel="noopener">Photo ↗</a></p></article>
         <article><span>03</span><div class="title-row"><h2>Restaurant Noma</h2><a class="michelin-link" href="https://guide.michelin.com/us/en/capital-region/copenhagen/restaurant/noma" target="_blank" rel="noopener">Michelin Guide · 3 Stars</a><a class="michelin-link" href="https://www.theworlds50best.com/discovery/Establishments/Denmark/Copenhagen/Noma.html" target="_blank" rel="noopener">Best of the Best, World's 50 Best</a></div><p>Copenhagen, Denmark<br />2023 – 2026<br />Intern → Chef de Partie<br /><a href="photos/noma.jpg" target="_blank" rel="noopener">Photo ↗</a></p></article>
-        <article><span>04</span><h2>Playa × Jongin Byeon</h2><p>Seoul, Korea<br />Pop-up dinner.<br /><a href="photos/playa.jpg" target="_blank" rel="noopener">Photo ↗</a></p></article>
-        <article><span>05</span><h2>The Breath Before Inspiration</h2><p>Simmons Beautyrest Black at Frieze 2026<br />Culinary Director<br />Four-course dining project.<br /><a href="photos/simmons-frieze.jpg" target="_blank" rel="noopener">Photo ↗</a></p></article>
+        <article><span>04</span><div class="title-row"><h2>Playa × Jongin Byeon</h2><a class="michelin-link" href="https://www.instagram.com/studio_foh/" target="_blank" rel="noopener">Tableware · @studio_foh</a></div><p>Seoul, Korea<br />Pop-up dinner.</p><div class="gallery" role="group" aria-label="Playa × Jongin Byeon 사진"><figure><img src="photos/playa-1.jpg" alt="Playa × Jongin Byeon 팝업 다이닝 테이블 세팅 — PLAYA 메뉴 카드와 실버 리프 오브제" loading="lazy" /><figcaption>Table setting — PLAYA menu &amp; silver leaf objet</figcaption></figure></div></article>
+        <article><span>05</span><h2>The Breath Before Inspiration</h2><p>Simmons Beautyrest Black at Frieze 2026<br />Culinary Director<br />Immersive art project.<br /><a href="photos/simmons-frieze.jpg" target="_blank" rel="noopener">Photo ↗</a></p></article>
       </section>
     </main>
     <footer><span>© 2026 Jongin Byeon</span><a href="mailto:jb@byeonjongin.com">jb@byeonjongin.com</a></footer>
